@@ -3,6 +3,14 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+import { login } from './commands/login';
+import { create } from './commands/create';
+import { deploy } from './commands/deploy';
+import { scale } from './commands/scale';
+import { info } from './commands/info';
+import { logs} from './commands/logs';
+import { destroy} from './commands/destroy';
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -21,9 +29,20 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage('Hello World!');
     });
 
+    const subscriptions = [
+        vscode.commands.registerCommand('extension.Login', login),
+        vscode.commands.registerCommand('extension.Create', create),
+        vscode.commands.registerCommand('extension.Deploy', deploy),
+        vscode.commands.registerCommand('extension.Scale', scale),
+        vscode.commands.registerCommand('extension.Info', info),
+        vscode.commands.registerCommand('extension.Logs', logs),
+        vscode.commands.registerCommand('extension.Destroy', destroy)
+    ]
+
     context.subscriptions.push(disposable);
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
+
 }

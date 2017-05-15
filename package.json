@@ -11,14 +11,43 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.sayHello"
+    "onCommand:extension.Login",
+    "onCommand:extension.Create",
+    "onCommand:extension.Deploy",
+    "onCommand:extension.Scale",
+    "onCommand:extension.Info",
+    "onCommand:extension.Logs",
+    "onCommand:extension.Destroy",
   ],
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.sayHello",
-        "title": "Hello World"
+        "command": "extension.Login",
+        "title": "Login to Deis"
+      },
+      { "command": "extension.Create",
+        "title": "Create a Deis Application"
+      },
+      {
+        "command": "extension.Deploy",
+        "title": "Deploy current Deis Application"
+      },
+      {
+        "command": "extension.Scale",
+        "title": "Scale your Deis Application"
+      },
+      {
+        "command": "extension.Info",
+        "title": "Show your Deis Application's information"
+      },
+      {
+        "command": "extension.Logs",
+        "title": "View your Deis Application's logs"
+      },
+      {
+        "command": "extension.Destroy",
+        "title": "Destroy your Deis Application"
       }
     ]
   },
