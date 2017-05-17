@@ -17,7 +17,7 @@
     "onCommand:extension.Scale",
     "onCommand:extension.Info",
     "onCommand:extension.Logs",
-    "onCommand:extension.Destroy",
+    "onCommand:extension.Destroy"
   ],
   "main": "./out/src/extension",
   "contributes": {
@@ -26,7 +26,8 @@
         "command": "extension.Login",
         "title": "Login to Deis"
       },
-      { "command": "extension.Create",
+      {
+        "command": "extension.Create",
         "title": "Create a Deis Application"
       },
       {
@@ -49,7 +50,21 @@
         "command": "extension.Destroy",
         "title": "Destroy your Deis Application"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Deis Configuration",
+      "properties": {
+        "deis.deisHost": {
+          "type": [
+            "string",
+            "0.0.0.0"
+          ],
+          "default": "0.0.0.0",
+          "description": "Specifies the Deis Host to connect to"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
@@ -66,6 +81,7 @@
     "vscode": "^1.0.0"
   },
   "dependencies": {
+    "deis-api": "^0.1.4",
     "deis-api-client": "^0.4.0",
     "nodegit": "^0.18.3"
   }
