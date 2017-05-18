@@ -2,44 +2,64 @@ import * as fs from 'fs';
 import * as vscode from 'vscode';
 import * as deis from 'deis-api';
 
-const AUTH_FILE = '.deis-auth';
-
 export let Deis;
 
-export const getDeisHost = () => {
+export const getDeisHost = ():string => {
     const workspaceConfig = vscode.workspace.getConfiguration('deis');
     if (!workspaceConfig.get('deisHost')) {
-        throw "No Configuration Found";
+        throw "No Deis Host!";
     }
 
-    return workspaceConfig.get('deisHost');
+    return workspaceConfig.get('deisHost') as string;
 }
 
+export const getDeisPassword = ():string => {
+    const workspaceConfig = vscode.workspace.getConfiguration('deis');
+
+    if (!workspaceConfig.get('deisPassword')) {
+        throw "No Deis Password!";
+    }
+
+    return workspaceConfig.get('deisPassword') as string;
+}
+
+export const getDeisUsername = ():string => {
+    const workspaceConfig = vscode.workspace.getConfiguration('deis');
+
+    if (!workspaceConfig.get('deisUsername')) {
+        throw "No Deis Username";
+    }
+
+    return workspaceConfig.get('deisUsername') as string;
+}
 
 export const performLogin = async (username, password, endpoint) => {
     return new Promise(async (resolve, reject) => {
-        console.log(endpoint);
         Deis = new deis({username:username, password:password, controller:endpoint, version:2});
         await loginDeis(Deis);
         resolve(Deis);
     });
 }
 
+export const promisifyDeis = async (deisFunction, appName) => {
+    return new Promise(async (resolve, reject) => {
+        deisFunction(appName, (error, body) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            resolve(body);
+        })
+    });
+}
+
 const loginDeis = (deis):Promise<string> => {
     return new Promise((resolve, reject) => {
-        deis.login((results) => {
-            if (results === null) {
-                resolve('Logged In');
+        deis.login((error, body) => {
+            if (error === null) {
+                resolve(body);
             }
         });
     });
 }
-
-const getAuth = () => {
-    // Gets auth from the .deis-auth file, if it exists. otherwise null.
-}
-
-const setAuth = (user, token) => {
-    // Sets auth token found from logging into deis workflow
-}
-

@@ -11,21 +11,17 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.Login",
     "onCommand:extension.Create",
     "onCommand:extension.Deploy",
     "onCommand:extension.Scale",
     "onCommand:extension.Info",
+    "onCommand:extension.Containers",
     "onCommand:extension.Logs",
     "onCommand:extension.Destroy"
   ],
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
-      {
-        "command": "extension.Login",
-        "title": "Login to Deis"
-      },
       {
         "command": "extension.Create",
         "title": "Create a Deis Application"
@@ -37,6 +33,10 @@
       {
         "command": "extension.Scale",
         "title": "Scale your Deis Application"
+      },
+      {
+        "command": "extension.Containers",
+        "title": "List Deis Application's containers"
       },
       {
         "command": "extension.Info",
@@ -62,6 +62,22 @@
           ],
           "default": "0.0.0.0",
           "description": "Specifies the Deis Host to connect to"
+        },
+        "deis.deisPassword": {
+          "type": [
+            "string",
+            "password"
+          ],
+          "default": "password",
+          "description": "Your Deis Password"
+        },
+        "deis.deisUsername": {
+          "type": [
+            "string",
+            "username"
+          ],
+          "default": "username",
+          "description": "Your Deis Username"
         }
       }
     }
@@ -83,6 +99,8 @@
   "dependencies": {
     "deis-api": "^0.1.4",
     "deis-api-client": "^0.4.0",
-    "nodegit": "^0.18.3"
+    "nodegit": "^0.18.3",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
   }
 }

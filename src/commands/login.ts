@@ -1,30 +1,22 @@
-import * as deis from 'deis-api-client';
 import * as vscode from 'vscode';
 
-import { getDeisHost, performLogin } from './deisUtil';
+import { getDeisHost, getDeisUsername, getDeisPassword, performLogin } from './deisUtil';
 
-export const login = async () => {
+import { readConfig } from './app'
+
+export const instantiate = async () => {
     let deisHost, username, password;
-    console.log('logging you in!');
 
     try {
         deisHost = getDeisHost();
+        username = getDeisUsername();
+        password = getDeisPassword();
     } catch (e) {
-        vscode.window.showErrorMessage('Please add your Deis Host to your VSCode configuration');
+        vscode.window.showErrorMessage('Please complete your Deis Configuration!');
         return;
     }
 
-    username = await vscode.window.showInputBox({
-        prompt: 'Please enter your Deis Username',
-        placeHolder: 'Deis Username…'
-    });
-
-    password = await vscode.window.showInputBox({
-        prompt: 'Please enter your Deis Password',
-        password: true,
-        placeHolder: 'Deis Password…'
-    });
-
     let Deis:any = await performLogin(username, password, deisHost);
-    vscode.window.showInformationMessage(Deis.whoami().message);
+    console.log(Deis.whoami().message);
+    readConfig();
 }
